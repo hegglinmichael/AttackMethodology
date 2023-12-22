@@ -1,5 +1,7 @@
-# AttackMethodology
-This repo will be my attack methodology for HTB attacking.  This is purely academic and should not be used for malicious purposes.
+
+# Stock Tools to Install
+ * chmod +x install.tools.sh
+ * sudo ./install.tools.sh
 
 # Table of Contents
 1. Prerequisites
@@ -38,13 +40,13 @@ This repo will be my attack methodology for HTB attacking.  This is purely acade
 
     ### General Port Scanning
     ```
-    $ sudo nmap -sC -sV -oA $HTB $HTBIP     # this is gonna work for most standard runs
-    $ sudo nmap -sU -A $HTBIP               # this is for udp ports
+    $ sudo nmap -sC -sV -oA $HTB $HTBIP     # Scan for common scripts, enumerate versions, and output all formats
+    $ sudo nmap -sU -A $HTBIP               # UDP port scan with version detection
     ```
 
     ### Banner Grabbing
     ```
-    $ nc $HTBIP <port>
+    $ nc $HTBIP <port>                      # Connect to a specific port for banner grabbing
     ```
 
 # Enumeration
@@ -53,8 +55,8 @@ This repo will be my attack methodology for HTB attacking.  This is purely acade
 
     ### Web Application Enumeration
     ```
-    $ nmap -p 80,443 $HTBIP --script http-vuln*
-    $ nmap -p 80,443 $HTBIP --script http-enum*
+    $ nmap -p 80,443 $HTBIP --script http-vuln*     # Nmap script to find common web vulnerabilities
+    $ nmap -p 80,443 $HTBIP --script http-enum*     # Nmap script to enumerate web applications
 
     $ gobuster dir -u $HTBWEB -w /usr/share/wordlists/SecLists/Discovery/Web-Content/big.txt -t 40
     $ gobuster dir -u $HTBWEB -w /usr/share/wordlists/SecLists/Discovery/Web-Content/directory-list-2.3-big.txt -t 40
@@ -65,7 +67,7 @@ This repo will be my attack methodology for HTB attacking.  This is purely acade
 
     $ nikto -host $HTBWEB
 
-    $ sqlmap -u $HTBWEB/login --data="username=test&password=test" --dbs
+    $ sqlmap -u $HTBWEB/login --data="username=test&password=test" --dbs    # SQL injection testing with sqlmap
     ```
 
 # Initial Access
@@ -97,3 +99,7 @@ This repo will be my attack methodology for HTB attacking.  This is purely acade
 # Privilege Escalation
 ---
 * Elevate privileges to gain higher-level access, such as moving from a low-privileged user to an administrator or root.
+
+	### Buffer Overflows
+
+	#### 32-bit Architecture, no memory protections
